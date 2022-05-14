@@ -11,11 +11,99 @@
     protected $db_name;
 
     function __construct($config) {
-      $this->bot = new \TelegramBot\Api\Client($config['token']);
+
       $this->db_host = $config['db_host'];
       $this->db_user = $config['db_user'];
       $this->db_password = $config['db_password'];
       $this->db_name = $config['db_name'];
+
+      $this->bot = new \TelegramBot\Api\Client($config['token']);
+
+      $this->bot->on(function (\TelegramBot\Api\Types\Update $update) use ($this->bot) {
+
+        $message = $update->getMessage();
+        $chat_id = $message->getChat()->getId();
+        $this->bot->sendMessage($chat_id, $chat_id);
+
+           // global $screens;
+           //
+           //
+           // $callbackQuery = $update->getCallbackQuery();
+           // $message = $update->getMessage();
+           //
+           // if($callbackQuery){
+           //
+           //   $chat_id = $callbackQuery->getMessage()->getChat()->getId();
+           //   $state = load_state($chat_id);
+           //
+           //   if ( $state['last_bot_message_id'] && $state['last_bot_message_id'] != $callbackQuery->getMessage()->getMessageId() ) return;
+           //
+           //   $state['user_input'] = ['text'=>$callbackQuery->getData()];
+           //   $state['username'] = $callbackQuery->getMessage()->getChat()->getUsername();
+           //
+           //
+           // } elseif ($message){
+           //
+           //   $chat_id = $message->getChat()->getId();
+           //   $state = load_state($chat_id);
+           //
+           //
+           //
+           //   //if ( $state['last_bot_message_id'] && $state['last_bot_message_id'] != $message->getMessageId() ) return;
+           //
+           //   $state['user_input'] = ['text'=>$message->getText()];
+           //   $state['username'] = $message->getChat()->getUsername();
+           //
+           //
+           //   if ( $message->getPhoto() !== null ){
+           //     $state['user_input'] = ['photo_id' => $message->getPhoto()[0]->getFileId(), 'text' => $message->getCaption()];
+           //   }
+           //
+           // }
+           //
+           //
+           // $screen = $screens[$state['screen']];
+           // $text = $state['user_input']['text'];
+           //
+           //
+           // // setting callback
+           // if ($text) {
+           //   if ( isset( $screen['callback'][$text] ) ){
+           //     $callback = $screen['callback'][$text];
+           //   } else {
+           //     $callback = $screen['callback']['__text'];
+           //   }
+           // }
+           // if ( $state['user_input']['photo_id'] ){
+           //   if ( isset( $screen['callback']['__photo'] ) ){
+           //     $callback = $screen['callback']['__photo'];
+           //   }
+           // }
+           //
+           //
+           // // firing callback
+           //
+           // if ($callback){
+           //   if ( is_callable( $callback['action'] ) ) $state = $callback['action']($state);
+           //   if ( is_callable( $callback['next_screen'] ) ){
+           //     $next_screen = $callback['next_screen']($state);
+           //   } else {
+           //     $next_screen = $callback['next_screen'];
+           //   }
+           // }
+           //
+           // // checking admin for an admin screen
+           // if ( ( substr( $next_screen, 0, 5 ) === "admin" ) && !is_admin($state) ) $next_screen = 'start';
+           //
+           // $state['screen'] = ($next_screen && isset($screens[$next_screen])) ? $next_screen : 'start';
+           //
+           // save_state( $chat_id, drawScreen($chat_id, $state) );
+
+
+       }, function () {
+           return true;
+       });
+
     }
 
     protected function connect_db(){
@@ -60,5 +148,5 @@
     }
 
   }
-  
+
 ?>
