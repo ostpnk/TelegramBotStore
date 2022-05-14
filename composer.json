@@ -1,0 +1,22 @@
+{
+    "name": "ostpnk/TelegramBotStore",
+    "description": "Basic online store in Telegram",
+    "type": "package",
+    "require": {
+        "php": ">=5.3.0"
+    },
+    "license": "mit",
+    "authors": [
+        {
+            "name": "ostpnk",
+            "email": "ostpnk@gmail.com",
+            "homepage": "http://ostpnk.xyz"
+        }
+    ],
+    "minimum-stability": "dev",
+    "autoload": {
+        "psr-4": {
+            "ostpnk\\TelegramBotStore\\": "src/"
+        }
+    } 
+}
