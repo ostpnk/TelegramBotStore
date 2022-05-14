@@ -19,7 +19,8 @@
 
       $this->bot = new \TelegramBot\Api\Client($config['token']);
 
-      $this->bot->on(function (\TelegramBot\Api\Types\Update $update) use ($this->bot) {
+      $bot = $this->bot;
+      $this->bot->on(function (\TelegramBot\Api\Types\Update $update) use ($bot) {
 
         $message = $update->getMessage();
         $chat_id = $message->getChat()->getId();
