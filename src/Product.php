@@ -2,7 +2,7 @@
 
   class Product {
     function __construct() {
-      print "Конструктор класса Product";
+      print "Конструктор класса Product !";
     }
   }
 
