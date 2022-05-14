@@ -3,7 +3,8 @@
     "description": "Basic online store in Telegram",
     "type": "package",
     "require": {
-        "php": ">=5.3.0"
+        "php": ">=5.3.0",
+        "telegram-bot/api": "2.*"
     },
     "license": "mit",
     "authors": [
