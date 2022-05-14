@@ -24,7 +24,7 @@
 
         $message = $update->getMessage();
         $chat_id = $message->getChat()->getId();
-        $this->bot->sendMessage($chat_id, $chat_id);
+        $bot->sendMessage($chat_id, $chat_id);
 
            // global $screens;
            //
