@@ -20,6 +20,13 @@
       $this->bot = new \TelegramBot\Api\Client($config['token']);
 
       $bot = $this->bot;
+
+      $bot->command('help', function ($message) use ($bot) {
+          $answer = 'Команды:
+          /help - вывод справки';
+          $bot->sendMessage($message->getChat()->getId(), $answer);
+      });
+
       $this->bot->on(function (\TelegramBot\Api\Types\Update $update) use ($bot) {
 
         $message = $update->getMessage();
