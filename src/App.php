@@ -19,6 +19,8 @@
 
       $this->bot = new \TelegramBot\Api\Client($config['token']);
 
+      $this->log_db('Constructor');
+
       $bot = $this->bot;
 
       $bot->command('help', function ($message) use ($bot) {
@@ -144,6 +146,22 @@
         try {
           $stmt = $mysqli->prepare("REPLACE INTO state_cache (chat_id, state, time) VALUES (?, ?, current_timestamp)");
           $stmt->bind_param("is", ...[$chat_id,json_encode($state)] );
+          $result = $stmt->execute();
+          $error = $stmt->error;
+          $stmt->close();
+          $mysqli->close();
+          return $error;
+        } catch (Exception $e){
+          return $e;
+        }
+      }
+    }
+
+    function log_db($str){
+      if ( $mysqli = $this->connect_db() ) {
+        try {
+          $stmt = $mysqli->prepare("INSERT INTO log (str) VALUES ( ?)");
+          $stmt->bind_param("s", $str );
           $result = $stmt->execute();
           $error = $stmt->error;
           $stmt->close();
