@@ -188,7 +188,7 @@
       // Write the log file.
       $file  = $upload_dir . '/' . $file . '.log';
       $file  = fopen( $file, $mode );
-      $bytes = fwrite( $file, current_time( 'mysql' ) . "::" . $entry . "\n" );
+      $bytes = fwrite( $file, time( 'mysql' ) . "::" . $entry . "\n" );
       fclose( $file );
 
       return $bytes;
