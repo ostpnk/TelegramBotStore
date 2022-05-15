@@ -20,7 +20,6 @@
       $this->bot = new \TelegramBot\Api\Client($config['token']);
 
       // $this->log_db('Constructor');
-      $this->disk_log('Constructor');
 
       $bot = $this->bot;
 
@@ -29,6 +28,9 @@
           /help - вывод справки';
           $bot->sendMessage($message->getChat()->getId(), $answer);
       });
+
+      $this->disk_log($bot);
+
 
       $this->bot->on(function (\TelegramBot\Api\Types\Update $update) use ($bot) {
 
