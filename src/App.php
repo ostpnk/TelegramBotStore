@@ -19,7 +19,8 @@
 
       $this->bot = new \TelegramBot\Api\Client($config['token']);
 
-      $this->log_db('Constructor');
+      // $this->log_db('Constructor');
+      $this->disk_log('Constructor');
 
       $bot = $this->bot;
 
@@ -171,6 +172,26 @@
           return $e;
         }
       }
+    }
+
+    function disk_log( $entry, $mode = 'a', $file = 'log' ) {
+      // Get WordPress uploads directory.
+      $upload_dir = __DIR__;
+
+      // If the entry is array, json_encode.
+      if ( is_array( $entry ) || is_object( $entry ) ) {
+        ob_start();
+        var_dump($entry);
+        $entry = ob_get_clean();
+      }
+
+      // Write the log file.
+      $file  = $upload_dir . '/' . $file . '.log';
+      $file  = fopen( $file, $mode );
+      $bytes = fwrite( $file, current_time( 'mysql' ) . "::" . $entry . "\n" );
+      fclose( $file );
+
+      return $bytes;
     }
 
   }
