@@ -32,7 +32,11 @@
       $this->disk_log($bot);
 
 
-      $this->bot->on(function (\TelegramBot\Api\Types\Update $update) use ($bot) {
+      $bot->on(function (\TelegramBot\Api\Types\Update $update) use ($bot) {
+
+        $this->disk_log('UPDATE');
+        $this->disk_log($update);
+
 
         $message = $update->getMessage();
         $chat_id = $message->getChat()->getId();
